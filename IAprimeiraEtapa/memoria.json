@@ -1,0 +1,19 @@
+{
+    "nome_usuario": "Kaua",
+    "preferencias": [
+        "chocolate",
+        "musica",
+        "vc"
+    ],
+    "ultima_emocao": "neutra",
+    "ultimo_assunto": "vc",
+    "ultima_pessoa": "",
+    "ultima_frase": "horario do brazil",
+    "historico": [
+        {
+            "pergunta": "que dia e hoje",
+            "resposta": "Hoje é sexta-feira, 01/08/2025.",
+            "data": "2025-08-01T15:35:33.591021"
+        }
+    ]
+}
