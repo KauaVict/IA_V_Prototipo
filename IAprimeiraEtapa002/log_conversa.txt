@@ -1,0 +1,39 @@
+V: Olá! Eu sou a V. Como posso te ajudar hoje?
+Você: OI
+V (neutra): Oi! Tudo certo por aí?
+Você: voce legal
+V (neutra): Ainda estou aprendendo a responder isso.
+Você: sair
+V (neutra): Até mais! Cuide-se. 👋
+V: Muito prazer, Kaua! 😊 Vamos conversar.
+Você: como vc esta
+V (neutra): Ainda estou aprendendo a responder isso, Kaua.
+Você: qual o meu nome
+V (neutra): Ainda estou aprendendo a responder isso, Kaua.
+Você: oi
+V (neutra): Oi Kaua! Tudo certo por aí?
+Você: sim
+V (neutra): Ainda estou aprendendo a responder isso, Kaua.
+V: Muito prazer, Kua! 😊 Vamos conversar.
+Você: oi
+V (neutra): Oi Kua! Tudo certo por aí?
+Você: sim
+V (neutra): Ainda estou aprendendo a responder isso, Kua.
+Você: todo bem
+V (neutra): Ainda estou aprendendo a responder isso, Kua.
+Você: gosto de voce
+V (neutra): Legal! Vou tentar lembrar que você gosta de voce. 😄
+V: Muito prazer, Kaua! 😊 Vamos conversar.
+Você: Eu gosto de sorvete
+V (neutra): Legal! Vou tentar lembrar que você gosta de sorvete. 😄
+Você: também gosto disso
+V (neutra): Ainda estou aprendendo a responder isso, Kaua.
+Você: meu amigo joão gosta de mim
+V (neutra): Ainda estou aprendendo a responder isso, Kaua.
+V: Muito prazer, Kaua! 😊 Vamos conversar.
+Você: eu gosto de vc
+V (neutra): Legal! Vou tentar lembrar que você gosta de vc. 😄
+Você: vc e muito legal
+V (neutra): Ainda estou aprendendo a responder isso, Kaua.
+Você: sair
+V (neutra): Até mais, Kaua! Cuide-se. 👋
