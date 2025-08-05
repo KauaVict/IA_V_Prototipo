@@ -1,19 +1,40 @@
 {
-    "nome_usuario": "Kaua",
-    "preferencias": [
-        "chocolate",
-        "musica",
-        "vc"
-    ],
-    "ultima_emocao": "neutra",
-    "ultimo_assunto": "vc",
-    "ultima_pessoa": "",
-    "ultima_frase": "horario do brazil",
-    "historico": [
-        {
-            "pergunta": "que dia e hoje",
-            "resposta": "Hoje é sexta-feira, 01/08/2025.",
-            "data": "2025-08-01T15:35:33.591021"
-        }
-    ]
+  "nome_usuario": "Kaua",
+  "preferencias": [
+    "pipoca",
+    "cafe",
+    "pizza",
+    "cantar",
+    "agua",
+    "vc",
+    "jogar",
+    "musica",
+    "chocolate",
+    "música"
+  ],
+  "gostos": [
+    "musica"
+  ],
+  "ultima_emocao": "neutra",
+  "ultimo_assunto": "musica",
+  "ultima_pessoa": "",
+  "ultima_frase": "gosto de musica",
+  "historico": [
+    {
+      "pergunta": "que dia e hoje",
+      "resposta": "Hoje é sexta-feira, 01/08/2025.",
+      "data": "2025-08-01T15:35:33.591021"
+    },
+    {
+      "pergunta": "oi",
+      "resposta": "Se eu tivesse um centavo pra cada vez que ouvi isso... Interessante, me fale mais!",
+      "data": "2025-08-01T15:50:14.059082"
+    }
+  ],
+  "personalidade": "murder_drones_v",
+  "detalhes_conversa": {
+    "hobby": "cafe"
+  },
+  "humor": "neutro",
+  "estado_emocional": "neutro"
 }

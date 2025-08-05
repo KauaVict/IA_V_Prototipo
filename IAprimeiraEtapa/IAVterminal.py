@@ -42,3 +42,5 @@ while True:
             print("V: Me explica melhor isso aí? 🤨")
         else:
             print("V: Ainda estou aprendendo a responder isso.")
+
+            #mostrar comandos mostra todos o comandos da ia
