@@ -54,18 +54,55 @@ def salvar_aprendizados(aprendizados):
     with open(CAMINHO_APRENDIZADOS, "w", encoding="utf-8") as f:
         json.dump(aprendizados, f, ensure_ascii=False, indent=2)
 
-def aprender(conteudo, memoria):
+def aprender_comando(conteudo, memoria):
+    conteudo = conteudo.lower().strip()
+    # Remover o prefixo do comando
+    if conteudo.startswith("aprenda:"):
+        conteudo = conteudo[len("aprenda:"):].strip()
+    elif conteudo.startswith("aprenda que"):
+        conteudo = conteudo[len("aprenda que"):].strip()
+    else:
+        return False  # Não é comando válido para aprender
+
+    if " é " not in conteudo:
+        return False  # Não tem a separação chave/valor
+
+    chave, valor = conteudo.split(" é ", 1)
+    chave = chave.strip()
+    valor = valor.strip()
+
     aprendizados = carregar_aprendizados()
-    partes = conteudo.split("é")
-    if len(partes) == 2:
-        chave = partes[0].replace("aprenda que", "").replace("aprenda:", "").strip().lower()
-        valor = partes[1].strip()
-        emocao = memoria.get("estado_emocional", "neutro")
-        aprendizados[chave] = {
-            "resposta": valor,
-            "emocao": emocao
-        }
-        salvar_aprendizados(aprendizados)
+    emocao = memoria.get("estado_emocional", "neutro")
+    aprendizados[chave] = {
+        "resposta": valor,
+        "emocao": emocao
+    }
+    salvar_aprendizados(aprendizados)
+    return True
+
+def detectar_aprendizado_automatico(texto, memoria):
+    texto = texto.lower().strip()
+    # Ignorar perguntas
+    if texto.endswith("?"):
+        return False
+
+    # Tentar detectar padrão "X é Y"
+    if " é " in texto:
+        chave, valor = texto.split(" é ", 1)
+        chave = chave.strip()
+        valor = valor.strip()
+
+        # Só aprende se chave tiver uma palavra (limite até 5 para evitar frases longas)
+        if 0 < len(chave.split()) <= 5 and len(valor) > 0:
+            aprendizados = carregar_aprendizados()
+            emocao = memoria.get("estado_emocional", "neutro")
+            aprendizados[chave] = {
+                "resposta": valor,
+                "emocao": emocao
+            }
+            salvar_aprendizados(aprendizados)
+            return True
+    return False
 
 # -------- Respostas Sociais --------
 
@@ -101,10 +138,17 @@ def gerar_resposta(pergunta, memoria):
     memoria["ultima_frase"] = pergunta_normalizada
     salvar_memoria(memoria)
 
-    # Aprendizado
+    # Aprender com comando explícito
     if pergunta_normalizada.startswith("aprenda"):
-        aprender(pergunta, memoria)
-        return "Tudo bem, aprendi isso! 😊", memoria
+        sucesso = aprender_comando(pergunta_normalizada, memoria)
+        if sucesso:
+            return "Tudo bem, aprendi isso! 😊", memoria
+        else:
+            return "Não consegui entender o que você quer que eu aprenda.", memoria
+
+    # Aprender automaticamente se frase for no formato "X é Y"
+    if detectar_aprendizado_automatico(pergunta_normalizada, memoria):
+        return "Obrigado por me ensinar isso! 😊", memoria
 
     # Preferências e gostos
     if "gosto de" in pergunta_normalizada:
@@ -130,7 +174,7 @@ def gerar_resposta(pergunta, memoria):
     if resposta_afetiva:
         return resposta_afetiva, memoria
 
-    # Aprendizado com emoção
+    # Buscar na base de aprendizados
     if pergunta_normalizada in aprendizados:
         dado = aprendizados[pergunta_normalizada]
         if isinstance(dado, dict):
@@ -151,7 +195,7 @@ def gerar_resposta(pergunta, memoria):
             else:
                 return dado, memoria
 
-    # Emoção e resposta padrão
+    # Detectar emoção e atualizar
     emocao = detectar_emocao(pergunta)
     atualizar_estado_emocional(memoria, emocao)
 

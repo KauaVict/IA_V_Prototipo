@@ -13,12 +13,14 @@
     "música"
   ],
   "gostos": [
-    "musica"
+    "musica",
+    "chocolate",
+    "você"
   ],
   "ultima_emocao": "neutra",
-  "ultimo_assunto": "musica",
+  "ultimo_assunto": "você",
   "ultima_pessoa": "",
-  "ultima_frase": "gosto de musica",
+  "ultima_frase": "gosto de você",
   "historico": [
     {
       "pergunta": "que dia e hoje",

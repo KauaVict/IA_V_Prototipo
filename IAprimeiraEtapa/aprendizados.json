@@ -8,5 +8,9 @@
   "o que é inteligência artificial": "Inteligência artificial é a área da computação que cria máquinas inteligentes.",
   "como você está": "Eu estou bem, obrigado por perguntar!",
   "o que é python": "Python é uma linguagem de programação muito popular.",
-  "cantar": "emitir sons com a voz de forma melodiosa"
+  "cantar": "emitir sons com a voz de forma melodiosa",
+  "o mar": {
+    "resposta": "salgado",
+    "emocao": "neutro"
+  }
 }
