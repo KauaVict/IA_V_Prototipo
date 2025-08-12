@@ -1,232 +1,231 @@
 import json
 import os
 import random
-from datetime import datetime
+from datetime import datetime, timezone
+import unicodedata
 
 CAMINHO_MEMORIA = "memoria.json"
 CAMINHO_APRENDIZADOS = "aprendizados.json"
 
-# -------- Funções de Memória e Emoção --------
-
-def carregar_memoria():
-    if os.path.exists(CAMINHO_MEMORIA):
-        with open(CAMINHO_MEMORIA, "r", encoding="utf-8") as f:
+def carregar_json(caminho):
+    if os.path.exists(caminho):
+        with open(caminho, "r", encoding="utf-8") as f:
             return json.load(f)
     else:
-        return {
-            "nome_usuario": "",
-            "historico": [],
-            "estado_emocional": "neutro",
-            "gostos": [],
-            "ultima_frase": "",
-            "ultimo_assunto": "",
-        }
+        if caminho == CAMINHO_MEMORIA:
+            return {
+                "nome_usuario": "",
+                "preferencias": [],
+                "personalidade": "gentil",
+                "historico": []
+            }
+        else:
+            return {}
 
-def salvar_memoria(memoria):
-    with open(CAMINHO_MEMORIA, "w", encoding="utf-8") as f:
-        json.dump(memoria, f, ensure_ascii=False, indent=2)
-
-def atualizar_estado_emocional(memoria, emocao):
-    memoria["estado_emocional"] = emocao
-    salvar_memoria(memoria)
+def salvar_json(caminho, dados):
+    with open(caminho, "w", encoding="utf-8") as f:
+        json.dump(dados, f, ensure_ascii=False, indent=4)
 
 def detectar_emocao(texto):
     texto = texto.lower()
-    if any(p in texto for p in ["triste", "chateado", "deprimido"]):
+    if any(p in texto for p in ["triste", "chateado", "deprimido", "infeliz", "mal"]):
         return "triste"
-    elif any(p in texto for p in ["feliz", "contente", "animado"]):
+    elif any(p in texto for p in ["feliz", "alegre", "animado", "contente", "bom"]):
         return "feliz"
-    elif any(p in texto for p in ["bravo", "irritado"]):
+    elif any(p in texto for p in ["raiva", "irritado", "bravo", "chateado"]):
         return "irritado"
     else:
-        return "neutro"
+        return "neutra"
 
-# -------- Aprendizado --------
-
-def carregar_aprendizados():
-    if os.path.exists(CAMINHO_APRENDIZADOS):
-        with open(CAMINHO_APRENDIZADOS, "r", encoding="utf-8") as f:
-            return json.load(f)
-    else:
-        return {}
-
-def salvar_aprendizados(aprendizados):
-    with open(CAMINHO_APRENDIZADOS, "w", encoding="utf-8") as f:
-        json.dump(aprendizados, f, ensure_ascii=False, indent=2)
-
-def aprender_comando(conteudo, memoria):
-    conteudo = conteudo.lower().strip()
-    # Remover o prefixo do comando
-    if conteudo.startswith("aprenda:"):
-        conteudo = conteudo[len("aprenda:"):].strip()
-    elif conteudo.startswith("aprenda que"):
-        conteudo = conteudo[len("aprenda que"):].strip()
-    else:
-        return False  # Não é comando válido para aprender
-
-    if " é " not in conteudo:
-        return False  # Não tem a separação chave/valor
-
-    chave, valor = conteudo.split(" é ", 1)
-    chave = chave.strip()
-    valor = valor.strip()
-
-    aprendizados = carregar_aprendizados()
-    emocao = memoria.get("estado_emocional", "neutro")
-    aprendizados[chave] = {
-        "resposta": valor,
-        "emocao": emocao
-    }
-    salvar_aprendizados(aprendizados)
-    return True
-
-def detectar_aprendizado_automatico(texto, memoria):
-    texto = texto.lower().strip()
-    # Ignorar perguntas
-    if texto.endswith("?"):
-        return False
-
-    # Tentar detectar padrão "X é Y"
-    if " é " in texto:
-        chave, valor = texto.split(" é ", 1)
-        chave = chave.strip()
-        valor = valor.strip()
-
-        # Só aprende se chave tiver uma palavra (limite até 5 para evitar frases longas)
-        if 0 < len(chave.split()) <= 5 and len(valor) > 0:
-            aprendizados = carregar_aprendizados()
-            emocao = memoria.get("estado_emocional", "neutro")
-            aprendizados[chave] = {
-                "resposta": valor,
-                "emocao": emocao
-            }
-            salvar_aprendizados(aprendizados)
-            return True
-    return False
-
-# -------- Respostas Sociais --------
-
-def responder_elogios(texto):
-    elogios = {
-        "você é legal": "Ahh, obrigado! Você também é uma ótima companhia 😊",
-        "gosto de você": "Eu também gosto de você 💖",
-        "você é muito legal": "Obrigado! Você me deixa feliz com isso!",
-        "vc e muito legal": "Você é muito gentil. Obrigado por isso!",
-        "você é incrível": "Que fofo! Obrigado mesmo!",
-    }
-    for frase, resposta in elogios.items():
-        if frase in texto:
-            return resposta
+def atualizar_preferencias(entrada, memoria):
+    entrada_lower = entrada.lower()
+    prefs = memoria.get("preferencias", [])
+    if "gosto de" in entrada_lower:
+        item = entrada_lower.split("gosto de")[-1].strip()
+        if item and item not in prefs:
+            prefs.append(item)
+            memoria["preferencias"] = prefs
+            return f"Que legal saber que você gosta de {item}!"
+    elif "não gosto de" in entrada_lower:
+        item = entrada_lower.split("não gosto de")[-1].strip()
+        if item and item not in prefs:
+            prefs.append(f"não {item}")
+            memoria["preferencias"] = prefs
+            return f"Entendi, vou lembrar que você não gosta de {item}."
     return None
 
-def emoji_por_emocao(emocao):
-    return {
-        "feliz": "😊",
-        "triste": "😔",
-        "irritado": "😠",
-        "neutro": "🙂"
-    }.get(emocao, "")
+def remover_acentos(txt):
+    return ''.join(c for c in unicodedata.normalize('NFD', txt)
+                   if unicodedata.category(c) != 'Mn').lower()
 
-# -------- Geração de Resposta --------
+def responder_data(entrada):
+    entrada_sem_acentos = remover_acentos(entrada)
+    # Verifica se está perguntando especificamente pela data ou dia de hoje
+    if ( ("dia" in entrada_sem_acentos and "hoje" in entrada_sem_acentos) or
+         ("qual" in entrada_sem_acentos and ("data" in entrada_sem_acentos or "dia" in entrada_sem_acentos)) ):
+        dias_semana = [
+            "segunda-feira", "terça-feira", "quarta-feira",
+            "quinta-feira", "sexta-feira", "sábado", "domingo"
+        ]
+        hoje = datetime.now()
+        dia_semana = dias_semana[hoje.weekday()]
+        return f"Hoje é {dia_semana}, {hoje.strftime('%d/%m/%Y')}."
+    return None
 
-def gerar_resposta(pergunta, memoria):
-    aprendizados = carregar_aprendizados()
-    nome = memoria.get("nome_usuario", "")
-    pergunta_normalizada = pergunta.lower().strip()
 
-    # Salvar última frase
-    memoria["ultima_frase"] = pergunta_normalizada
-    salvar_memoria(memoria)
+def gerar_resposta(entrada, aprendizados, memoria):
+    entrada_lower = entrada.lower()
+    personalidade = memoria.get("personalidade", "gentil")
+    emocao_usuario = detectar_emocao(entrada)
 
-    # Aprender com comando explícito
-    if pergunta_normalizada.startswith("aprenda"):
-        sucesso = aprender_comando(pergunta_normalizada, memoria)
-        if sucesso:
-            return "Tudo bem, aprendi isso! 😊", memoria
+    resposta_pref = atualizar_preferencias(entrada, memoria)
+    if resposta_pref:
+        return resposta_pref
+
+    # Primeiro responder data
+    resposta_data = responder_data(entrada)
+    if resposta_data:
+        return resposta_data
+
+    respostas = aprendizados.get("respostas", {})
+    resposta_raw = respostas.get(entrada_lower)
+
+    if resposta_raw:
+        if isinstance(resposta_raw, dict):
+            texto = resposta_raw.get("texto", "")
+            emocao_resposta = resposta_raw.get("emocao", "neutra")
         else:
-            return "Não consegui entender o que você quer que eu aprenda.", memoria
+            texto = resposta_raw
+            emocao_resposta = "neutra"
+    else:
+        respostas_padrao = [
+            "Desculpa, ainda não sei responder isso.",
+            "Pode me ensinar a responder essa pergunta?",
+            "Interessante, me fale mais!",
+            "Não entendi muito bem, pode explicar?"
+        ]
+        texto = random.choice(respostas_padrao)
+        emocao_resposta = "neutra"
 
-    # Aprender automaticamente se frase for no formato "X é Y"
-    if detectar_aprendizado_automatico(pergunta_normalizada, memoria):
-        return "Obrigado por me ensinar isso! 😊", memoria
+    # Modula resposta com base na emoção do usuário e da resposta aprendida
+    if emocao_resposta == "triste" or emocao_usuario == "triste":
+        texto = "Poxa, sinto muito que você esteja assim. " + texto
+    elif emocao_resposta == "feliz" or emocao_usuario == "feliz":
+        texto = "Que bom ouvir isso! " + texto
+    elif emocao_resposta == "irritado" or emocao_usuario == "irritado":
+        texto = "Calma, vamos tentar resolver isso juntos. " + texto
 
-    # Preferências e gostos
-    if "gosto de" in pergunta_normalizada:
-        gosto = pergunta_normalizada.split("gosto de")[-1].strip()
-        if gosto not in memoria["gostos"]:
-            memoria["gostos"].append(gosto)
-            memoria["ultimo_assunto"] = gosto
-            salvar_memoria(memoria)
-            return f"Ah, você gosta de {gosto}. Me conte mais!", memoria
-        else:
-            return f"Você já me falou que gosta de {gosto}. Me conte mais!", memoria
+    if personalidade == "gentil":
+        texto = texto + " Estou aqui para ajudar!"
+    elif personalidade == "animada":
+        texto = "😄 " + texto + " Que legal!"
+    elif personalidade == "curiosa":
+        texto = "Hmm, que curioso... " + texto
 
-    # Reconhecer "também gosto disso"
-    if "também gosto" in pergunta_normalizada or "também gosto disso" in pergunta_normalizada:
-        ultimo = memoria.get("ultimo_assunto", "")
-        if ultimo:
-            return f"Que coincidência! Também gosto de {ultimo} 😄", memoria
-        else:
-            return "Gosto de muitas coisas também 😄", memoria
+    return texto
 
-    # Elogios e frases afetivas
-    resposta_afetiva = responder_elogios(pergunta_normalizada)
-    if resposta_afetiva:
-        return resposta_afetiva, memoria
 
-    # Buscar na base de aprendizados
-    if pergunta_normalizada in aprendizados:
-        dado = aprendizados[pergunta_normalizada]
-        if isinstance(dado, dict):
-            resposta = dado.get("resposta", "")
-            emocao = dado.get("emocao", "neutro")
-            emoji = emoji_por_emocao(emocao)
-            return f"{resposta} {emoji}", memoria
-        else:
-            return dado, memoria
-
-    for chave, dado in aprendizados.items():
-        if chave in pergunta_normalizada:
-            if isinstance(dado, dict):
-                resposta = dado.get("resposta", "")
-                emocao = dado.get("emocao", "neutro")
-                emoji = emoji_por_emocao(emocao)
-                return f"{resposta} {emoji}", memoria
-            else:
-                return dado, memoria
-
-    # Detectar emoção e atualizar
-    emocao = detectar_emocao(pergunta)
-    atualizar_estado_emocional(memoria, emocao)
-
-    respostas_padrao = [
-        "Me conte mais!",
-        "Interessante, continue...",
-        f"Entendi, {nome}."
-    ]
-    return random.choice(respostas_padrao), memoria
-
-# -------- Execução Principal --------
+# Dicionário de perguntas por tema preferido
+perguntas_por_tema = {
+    "futebol": [
+        "Você assistiu ao jogo ontem?",
+        "Qual seu time favorito?",
+        "Quem você acha que vai ganhar o campeonato?"
+    ],
+    "cinema": [
+        "Qual foi o último filme que você viu?",
+        "Você prefere cinema ou séries?",
+        "Tem algum filme que marcou sua vida?"
+    ],
+    "tecnologia": [
+        "Qual gadget novo você acha mais interessante?",
+        "Você gosta de acompanhar notícias de tecnologia?",
+        "Tem alguma tecnologia que você acha que vai revolucionar o futuro?"
+    ],
+    # Adicione mais temas conforme quiser
+}
 
 def iniciar_conversa():
-    memoria = carregar_memoria()
+    memoria = carregar_json(CAMINHO_MEMORIA)
+    aprendizados = carregar_json(CAMINHO_APRENDIZADOS)
 
-    if not memoria["nome_usuario"]:
-        nome = input("V: Olá! Qual é o seu nome? ")
-        memoria["nome_usuario"] = nome
-        salvar_memoria(memoria)
-    else:
-        nome = memoria["nome_usuario"]
+    if not memoria.get("nome_usuario"):
+        memoria["nome_usuario"] = input("Qual o seu nome? ").strip()
+        salvar_json(CAMINHO_MEMORIA, memoria)
 
+    nome = memoria["nome_usuario"]
     print(f"V: Olá {nome}! Como posso ajudar você hoje?")
 
+    respostas_padrao = [
+        "Desculpa, ainda não sei responder isso.",
+        "Pode me ensinar a responder essa pergunta?",
+        "Interessante, me fale mais!",
+        "Não entendi muito bem, pode explicar?"
+    ]
+
+    contador_mensagens = 0  # Contador para interações
+
     while True:
-        entrada = input("Você: ")
-        if entrada.lower() in ["sair", "tchau", "até mais"]:
-            print("V: Até mais! 😊")
+        # Pergunta automática a cada 5 mensagens
+        if contador_mensagens > 0 and contador_mensagens % 5 == 0:
+            prefs = memoria.get("preferencias", [])
+            if prefs:
+                tema = random.choice(prefs)
+                perguntas = perguntas_por_tema.get(tema.lower())
+                if perguntas:
+                    pergunta_auto = random.choice(perguntas)
+                    print(f"V (pergunta automática sobre {tema}): {pergunta_auto}")
+
+        entrada = input("Você: ").strip()
+        if entrada.lower() in ["tchau", "sair", "adeus", "exit"]:
+            print(f"V: Até mais, {nome}! Foi bom conversar com você.")
             break
-        resposta, memoria = gerar_resposta(entrada, memoria)
-        print(f"V: {resposta}")
+
+        if entrada.lower().startswith("aprenda:"):
+            aprendizado = entrada[len("aprenda:"):].strip()
+            emocao_aprendida = detectar_emocao(entrada)
+            if aprendizado:
+                if "|" in aprendizado:
+                    chave, valor = aprendizado.split("|", 1)
+                    chave = chave.strip()
+                    valor = valor.strip()
+                    aprendizados.setdefault("respostas", {})[chave.lower()] = {
+                        "texto": valor,
+                        "emocao": emocao_aprendida
+                    }
+                    salvar_json(CAMINHO_APRENDIZADOS, aprendizados)
+                    print("V: Aprendi isso, obrigado!")
+                else:
+                    print("V: Para ensinar, use o formato: aprenda: pergunta | resposta")
+            else:
+                print("V: O que você quer que eu aprenda? Use: aprenda: pergunta | resposta")
+            continue
+
+        resposta = gerar_resposta(entrada, aprendizados, memoria)
+        print("V:", resposta)
+
+        if not entrada.lower().startswith("aprenda:") and any(
+            resposta.startswith(padrao) for padrao in respostas_padrao
+        ):
+            feedback = input("Essa resposta está boa? (s/n): ").strip().lower()
+            if feedback == "n":
+                nova_resposta = input("Como você gostaria que eu respondesse? ").strip()
+                emocao_feedback = detectar_emocao(nova_resposta)
+                aprendizados.setdefault("respostas", {})[entrada.lower()] = {
+                    "texto": nova_resposta,
+                    "emocao": emocao_feedback
+                }
+                salvar_json(CAMINHO_APRENDIZADOS, aprendizados)
+                print("V: Obrigada! Vou lembrar disso.")
+
+        memoria.setdefault("historico", []).append({
+            "pergunta": entrada,
+            "resposta": resposta,
+            "data": datetime.now(timezone.utc).isoformat()
+        })
+        salvar_json(CAMINHO_MEMORIA, memoria)
+
+        contador_mensagens += 1
 
 if __name__ == "__main__":
     iniciar_conversa()

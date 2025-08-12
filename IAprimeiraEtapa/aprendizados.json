@@ -1,16 +1,51 @@
 {
-  "café": "bebida quente feita com grãos",
-  "o que é café": "Café é uma bebida feita a partir dos grãos torrados do cafeeiro.",
-  "quem é você": "Eu sou a V, sua assistente virtual.",
-  "que horas são": "Eu posso te dizer as horas atuais quando você perguntar.",
-  "onde fica o brasil": "O Brasil fica na América do Sul.",
-  "qual é a capital do brasil": "A capital do Brasil é Brasília.",
-  "o que é inteligência artificial": "Inteligência artificial é a área da computação que cria máquinas inteligentes.",
-  "como você está": "Eu estou bem, obrigado por perguntar!",
-  "o que é python": "Python é uma linguagem de programação muito popular.",
-  "cantar": "emitir sons com a voz de forma melodiosa",
-  "o mar": {
-    "resposta": "salgado",
-    "emocao": "neutro"
-  }
+    "gostos": [
+        {
+            "item": "pizza",
+            "emocao": "neutra"
+        }
+    ],
+    "antipatias": [],
+    "fatos": [
+        {
+            "sujeito": "Meu nome",
+            "predicado": "João",
+            "quando": "2025-08-10T02:10:00.256732",
+            "emocao": "neutra"
+        },
+        {
+            "sujeito": "meu nome",
+            "predicado": "Kauã",
+            "quando": "2025-08-10T02:12:11.195848+00:00",
+            "emocao": "neutra"
+        },
+        {
+            "sujeito": "Café",
+            "predicado": "uma bebida",
+            "quando": "2025-08-10T02:12:44.731552+00:00",
+            "emocao": "neutra"
+        },
+        {
+            "sujeito": "Água",
+            "predicado": "um líquido",
+            "quando": "2025-08-10T02:27:22.480798+00:00",
+            "emocao": "neutro"
+        }
+    ],
+    "respostas": {
+        "eu gosto de pizza": "que bom",
+        "como você está?": "estou bem e você como está hoje",
+        "qual é a capital do brasil?": "A capital do Brasil é Brasília.",
+        "como vc esta": "estou bem é você",
+        "o que e python": "Python é uma linguagem de programação de alto nível, interpretada, orientada a objetos, e de propósito geral.",
+        "o que e agua": "A água é um recurso natural essencial para a vida na Terra, composta por dois átomos de hidrogênio e um átomo de oxigênio (H2O).",
+        "qual seu nome": {
+    "texto": "Meu nome é V",
+    "emocao": "feliz"
+},
+        "qual seu time": {
+            "texto": "Não tenho time",
+            "emocao": "neutra"
+        }
+    }
 }

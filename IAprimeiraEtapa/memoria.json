@@ -1,42 +1,160 @@
 {
-  "nome_usuario": "Kaua",
-  "preferencias": [
-    "pipoca",
-    "cafe",
-    "pizza",
-    "cantar",
-    "agua",
-    "vc",
-    "jogar",
-    "musica",
-    "chocolate",
-    "música"
-  ],
-  "gostos": [
-    "musica",
-    "chocolate",
-    "você"
-  ],
-  "ultima_emocao": "neutra",
-  "ultimo_assunto": "você",
-  "ultima_pessoa": "",
-  "ultima_frase": "gosto de você",
-  "historico": [
-    {
-      "pergunta": "que dia e hoje",
-      "resposta": "Hoje é sexta-feira, 01/08/2025.",
-      "data": "2025-08-01T15:35:33.591021"
-    },
-    {
-      "pergunta": "oi",
-      "resposta": "Se eu tivesse um centavo pra cada vez que ouvi isso... Interessante, me fale mais!",
-      "data": "2025-08-01T15:50:14.059082"
-    }
-  ],
-  "personalidade": "murder_drones_v",
-  "detalhes_conversa": {
-    "hobby": "cafe"
-  },
-  "humor": "neutro",
-  "estado_emocional": "neutro"
+    "nome": "kauã",
+    "infos": {},
+    "nome_usuario": "kauã",
+    "preferencias": [
+        "pizza"
+    ],
+    "historico": [
+        {
+            "pergunta": "Eu gosto de pizza",
+            "resposta": "Eu gosto de pizza. Estou aqui para ajudar!",
+            "data": "2025-08-10T02:27:13.918476+00:00"
+        },
+        {
+            "pergunta": "Água é um líquido",
+            "resposta": "Água é um líquido. Estou aqui para ajudar!",
+            "data": "2025-08-10T02:27:38.348830+00:00"
+        },
+        {
+            "pergunta": "Como você está?",
+            "resposta": "Pode me ensinar a responder essa pergunta? Estou aqui para ajudar!",
+            "data": "2025-08-10T02:30:05.139389+00:00"
+        },
+        {
+            "pergunta": "Como você está?",
+            "resposta": "Interessante, me fale mais! Estou aqui para ajudar!",
+            "data": "2025-08-10T02:31:16.788077+00:00"
+        },
+        {
+            "pergunta": "Como você está?",
+            "resposta": "estou bem e você como está hoje Estou aqui para ajudar!",
+            "data": "2025-08-10T02:31:27.450390+00:00"
+        },
+        {
+            "pergunta": "aprenda: qual é a capital do Brasil? | A capital do Brasil é Brasília.",
+            "resposta": "Aprendi isso, obrigado!",
+            "data": "2025-08-10T02:31:41.312412+00:00"
+        },
+        {
+            "pergunta": "Qual é a capital do Brasil?",
+            "resposta": "A capital do Brasil é Brasília. Estou aqui para ajudar!",
+            "data": "2025-08-10T02:32:05.658690+00:00"
+        },
+        {
+            "pergunta": "Qual a data de hoje?",
+            "resposta": "Hoje é sábado, 09/08/2025.",
+            "data": "2025-08-10T02:35:10.008550+00:00"
+        },
+        {
+            "pergunta": "Qual a data de hoje?",
+            "resposta": "Hoje é sábado, 09/08/2025.",
+            "data": "2025-08-10T02:39:15.144386+00:00"
+        },
+        {
+            "pergunta": "como voce esta",
+            "resposta": "Desculpa, ainda não sei responder isso. Estou aqui para ajudar!",
+            "data": "2025-08-10T02:39:28.735739+00:00"
+        },
+        {
+            "pergunta": "como vc esta",
+            "resposta": "Pode me ensinar a responder essa pergunta? Estou aqui para ajudar!",
+            "data": "2025-08-10T02:42:18.159478+00:00"
+        },
+        {
+            "pergunta": "como vc esta",
+            "resposta": "estou bem é você Estou aqui para ajudar!",
+            "data": "2025-08-10T02:42:22.612919+00:00"
+        },
+        {
+            "pergunta": "como vc esta",
+            "resposta": "estou bem é você Estou aqui para ajudar!",
+            "data": "2025-08-10T02:57:04.858149+00:00"
+        },
+        {
+            "pergunta": "Qual a data de hoje?",
+            "resposta": "Hoje é sábado, 09/08/2025.",
+            "data": "2025-08-10T02:58:23.822032+00:00"
+        },
+        {
+            "pergunta": "o que e python",
+            "resposta": "Pode me ensinar a responder essa pergunta? Estou aqui para ajudar!",
+            "data": "2025-08-10T03:00:14.702713+00:00"
+        },
+        {
+            "pergunta": "o que e python",
+            "resposta": "Python é uma linguagem de programação de alto nível, interpretada, orientada a objetos, e de propósito geral. Estou aqui para ajudar!",
+            "data": "2025-08-10T03:01:29.764984+00:00"
+        },
+        {
+            "pergunta": "o que e agua",
+            "resposta": "Não entendi muito bem, pode explicar? Estou aqui para ajudar!",
+            "data": "2025-08-10T03:05:17.372136+00:00"
+        },
+        {
+            "pergunta": "qual meu nome?",
+            "resposta": "Hoje é domingo, 10/08/2025.",
+            "data": "2025-08-10T03:05:39.162484+00:00"
+        },
+        {
+            "pergunta": "nome",
+            "resposta": "Não entendi muito bem, pode explicar? Estou aqui para ajudar!",
+            "data": "2025-08-10T03:06:21.722582+00:00"
+        },
+        {
+            "pergunta": "qual seu nome",
+            "resposta": "Hoje é domingo, 10/08/2025.",
+            "data": "2025-08-10T03:20:36.078047+00:00"
+        },
+        {
+            "pergunta": "qual seu nome",
+            "resposta": "Hoje é domingo, 10/08/2025.",
+            "data": "2025-08-10T03:27:57.874695+00:00"
+        },
+        {
+            "pergunta": "qual seu nome",
+            "resposta": "Hoje é domingo, 10/08/2025.",
+            "data": "2025-08-10T03:31:43.870737+00:00"
+        },
+        {
+            "pergunta": "qual seu nome",
+            "resposta": "Hoje é domingo, 10/08/2025.",
+            "data": "2025-08-10T03:42:01.939365+00:00"
+        },
+        {
+            "pergunta": "qual seu nome",
+            "resposta": "Hoje é domingo, 10/08/2025.",
+            "data": "2025-08-10T03:42:06.337393+00:00"
+        },
+        {
+            "pergunta": "qual a data",
+            "resposta": "Hoje é domingo, 10/08/2025.",
+            "data": "2025-08-10T03:42:10.210162+00:00"
+        },
+        {
+            "pergunta": "qual seu nome",
+            "resposta": "Hoje é domingo, 10/08/2025.",
+            "data": "2025-08-10T03:45:31.817353+00:00"
+        },
+        {
+            "pergunta": "qual seu nome",
+            "resposta": "Hoje é domingo, 10/08/2025.",
+            "data": "2025-08-10T03:50:07.239241+00:00"
+        },
+        {
+            "pergunta": "qual seu nome",
+            "resposta": "Que bom ouvir isso! Meu nome é V Estou aqui para ajudar!",
+            "data": "2025-08-10T03:52:31.765828+00:00"
+        },
+        {
+            "pergunta": "qual a data de hoje",
+            "resposta": "Hoje é domingo, 10/08/2025.",
+            "data": "2025-08-10T03:53:26.869108+00:00"
+        },
+        {
+            "pergunta": "qual seu nome",
+            "resposta": "Que bom ouvir isso! Meu nome é V Estou aqui para ajudar!",
+            "data": "2025-08-10T03:55:00.125917+00:00"
+        }
+    ]
 }
